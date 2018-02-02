@@ -43,9 +43,9 @@ class CConvLayer(nn.Module):
             self.conv.bias.data.uniform_(-param_init, param_init)
 
     def forward(self, input, reduce_len):
-        output = F.tanh(self.conv(input))
-        output = F.max_pool2d(output, kernel_size = [1, reduce_len], stride = [1, 1])
+        output = F.tanh(self.conv(input)) # <batch * maxlen, cedim, 1, wdlen> --> <batch * maxlen, filter_nums, 1, reduce_len>
+        output = F.max_pool2d(output, kernel_size = [1, reduce_len], stride = [1, 1]) # <batch * maxlen, filter_nums, 1, 1>
 
         output = torch.squeeze(output, dim = 3)
-        return torch.squeeze(output, dim = 2)
+        return torch.squeeze(output, dim = 2) # <batch * maxlen, filter_nums>
 

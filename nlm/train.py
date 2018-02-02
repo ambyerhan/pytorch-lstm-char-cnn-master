@@ -24,13 +24,13 @@ def train(model, opt, lr, reader, e, gstep, args):
     hidden_state = model.init_hidden(args.batch)
     for x, y in reader.iter():
         model.train()
-        x, y = Variable(torch.from_numpy(x)), Variable(torch.from_numpy(y.T))
+        x, y = Variable(torch.from_numpy(x)), Variable(torch.from_numpy(y.T)) # <batch, maxlen, wdlen>
         x = torch.transpose(x, 0, 1)
         if args.cuda:
             x, y = x.cuda(), y.cuda()
 
         hidden_state = repackage_hidden(hidden_state)
-        model.zero_grad()
+        model.zero_grad() # <maxlen, batch, wdlen>
         logits, hidden_state = model(x, hidden_state)  # step1 todo model_output <batch, maxlen, vsize>, y <batch, maxlen>
         output = logits.contiguous().view(-1, args.wvsize)
         labels = y.contiguous().view(-1)

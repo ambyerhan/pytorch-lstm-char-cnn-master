@@ -47,9 +47,9 @@ class CConvModel(nn.Module):
         for i, ker in enumerate(self.kernel_sizes):
             reduce_len = wdlen - ker + 1
             output = self.__getattr__("kernel_size_%d" % i)(input, reduce_len)
-            outputs.append(output)
+            outputs.append(output) # <batch * maxlen, filter_num>
 
-        return torch.cat(outputs, 1)
+        return torch.cat(outputs, 1) # <batch * maxlen, 1100>
 
 
 class CNLM(nn.Module):
@@ -100,7 +100,7 @@ class CNLM(nn.Module):
         input_ = input.view(maxlen * batch, wdlen)
 
         emb = self.char_embed(input_) # todo <maxlen * batch> --> <maxlen * batch, wembed>
-        emb = self.drop(emb)
+        #emb = self.drop(emb)
 
         cnn = self.conv(emb) # <maxlen * batch, cedim> --> <maxlen * batch, cnn_size>
 
