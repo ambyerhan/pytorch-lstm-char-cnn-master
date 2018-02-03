@@ -9,8 +9,8 @@ from nlm.utils import disp_hparam
 from nlm.model import CNLM
 from nlm.train import train_eval
 
-FILE_NAME_LIST = ['_train.txt.prepro', '_valid.txt.prepro']
-#FILE_NAME_LIST = ['train.txt', 'valid.txt', 'test.txt']
+#FILE_NAME_LIST = ['_train.txt.prepro', '_valid.txt.prepro']
+FILE_NAME_LIST = ['train.txt', 'valid.txt', 'test.txt']
 
 def arg_parser():
     tips  = "######################################################################\n"
