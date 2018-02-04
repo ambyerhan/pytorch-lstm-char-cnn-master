@@ -86,7 +86,7 @@ def eval(model, reader, e, gstep, args):
     return ave_loss, hidden_state
 
 
-def train_eval(nlm, opt, train_reader, valid_reader, args):
+def train_eval(nlm, opt, train_reader, valid_reader, test_reader, args):
     gstep = 0
     total_time = 0.
     best_valid_loss = None
@@ -144,3 +144,9 @@ def train_eval(nlm, opt, train_reader, valid_reader, args):
     print("=" * 89)
     print("\t> The minimum train loss = %f, train ppl = %f" % (min[0], min[1]))
     print("\t> The minimum valid loss = %f, valid ppl = %f" % (min[2], min[3]))
+	
+
+    print('=' * 89)
+    test_loss, _ = eval(nlm, test_reader, 0, gstep, args)
+    print("\t> The test loss = %f, test ppl = %f" % (test_loss, math.exp(test_loss)))
+    print('=' * 89) 

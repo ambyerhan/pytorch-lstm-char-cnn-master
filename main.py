@@ -131,8 +131,8 @@ def main(args):
                                             args.batch, args.maxlen)
     valid_reader = data_reader_tf.DataReader(word_tensor[FILE_NAME_LIST[1]], char_tensor[FILE_NAME_LIST[1]],
                                               args.batch, args.maxlen)
-    #test_reader  = data_reader_tf.DataReader(word_tensor[FILE_NAME_LIST[2]], char_tensor[FILE_NAME_LIST[2]],
-    #                                          args.batch, args.maxlen)
+    test_reader  = data_reader_tf.DataReader(word_tensor[FILE_NAME_LIST[2]], char_tensor[FILE_NAME_LIST[2]],
+                                              args.batch, args.maxlen)
 
     args.cvsize = char_vocab.size
     args.wvsize = word_vocab.size
@@ -164,7 +164,7 @@ def main(args):
 
     opt = optim.SGD(nlm.parameters(), lr = args.lr)
 
-    train_eval(nlm, opt, train_reader, valid_reader, args)
+    train_eval(nlm, opt, train_reader, valid_reader, test_reader, args)
 
 
 if __name__ == "__main__":
